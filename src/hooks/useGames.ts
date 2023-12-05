@@ -12,6 +12,12 @@ export interface Game {
   background_image: string
   metacritic: string
   rating_top: number
+  platforms: { platform: Platform }[]
+}
+export interface Platform {
+  id: number
+  name: string
+  slug: string
 }
 
 const useGames = () => {
