@@ -8,12 +8,18 @@ import { Platform } from '../hooks/usePlatform'
 interface Props {
   selectedGenra: Genra | null
   selectedPlatform: Platform | null
+  selectedOrder: string | null
 }
 
-const GameGrid = ({ selectedGenra, selectedPlatform }: Props) => {
+const GameGrid = ({
+  selectedGenra,
+  selectedPlatform,
+  selectedOrder,
+}: Props) => {
   const { data: games, error, isLoading } = useGames(
     selectedGenra,
     selectedPlatform,
+    selectedOrder,
   )
   const skeleton = [1, 2, 3, 4, 5, 6, 7, 8]
 
@@ -22,7 +28,7 @@ const GameGrid = ({ selectedGenra, selectedPlatform }: Props) => {
       {error && <p>{error}</p>}
       <SimpleGrid
         columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
-        padding={'10px'}
+        paddingY={5}
         spacing={10}
       >
         {isLoading &&
