@@ -30,7 +30,7 @@ const GenreList = ({ onSelectedGenre, selectedGenra }: Props) => {
               borderRadius={8}
             />
             <Button
-              fontSize={genre.id === selectedGenra.id ? 'lg' : 'normal'}
+              fontSize={genre?.id === selectedGenra?.id ? 'lg' : 'normal'}
               variant="link"
               onClick={() => {
                 console.log(genre)
