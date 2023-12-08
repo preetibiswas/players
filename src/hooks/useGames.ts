@@ -26,6 +26,7 @@ const useGames = (
   selectedGenra: Genra | null,
   selectedPlatform: Platform | null,
   selectedOrder: string | null,
+  searchText: string | null,
 ) =>
   useData<Game>(
     '/games',
@@ -34,9 +35,10 @@ const useGames = (
         genres: selectedGenra?.id,
         platforms: selectedPlatform?.id,
         ordering: selectedOrder,
+        search: searchText,
       },
     },
-    [selectedGenra?.id, selectedPlatform?.id, selectedOrder],
+    [selectedGenra?.id, selectedPlatform?.id, selectedOrder, searchText],
   )
 
 export default useGames

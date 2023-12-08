@@ -3,7 +3,7 @@ import { Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react'
 import { FaSortDown } from 'react-icons/fa'
 interface Props {
   onselectOrder: (order: string) => void
-  sortorder: string
+  sortorder: string | null
 }
 
 const SortSelector = ({ onselectOrder, sortorder }: Props) => {
