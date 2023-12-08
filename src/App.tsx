@@ -1,4 +1,12 @@
-import { Grid, GridItem, HStack, Show } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  HStack,
+  Heading,
+  Show,
+} from '@chakra-ui/react'
 import Navbar from './components/Navbar'
 import GameGrid from './components/GameGrid'
 import GenreList from './components/GenreList'
@@ -17,6 +25,7 @@ function App() {
   const [searchText, setSearchText] = useState<string | null>(null)
 
   console.log(searchText)
+  const heading = `${selectedGenra?.name || ''} ${selectedPlatform?.name || ''}`
 
   return (
     <Grid
@@ -40,19 +49,27 @@ function App() {
           />
         </GridItem>
       </Show>
-      <GridItem area={'main'} padding={'10px'}>
-        <HStack>
-          <PlatformSelector
-            onSelectedPlatform={(platform: Platform) =>
-              setSelectedPlatform(platform)
-            }
-            selectedPlatform={selectedPlatform}
-          />
-          <SortSelector
-            onselectOrder={(o) => setSelectedOrder(o)}
-            sortorder={selectedOrder}
-          />
-        </HStack>
+      <GridItem area={'main'} padding={10}>
+        <Box paddingLeft={2}>
+          <Heading as="h1" marginY={5} fontSize="5xl">
+            {heading}
+          </Heading>
+          <Flex marginBottom={5}>
+            <Box marginRight={5}>
+              <PlatformSelector
+                onSelectedPlatform={(platform: Platform) =>
+                  setSelectedPlatform(platform)
+                }
+                selectedPlatform={selectedPlatform}
+              />
+            </Box>
+            <SortSelector
+              onselectOrder={(o) => setSelectedOrder(o)}
+              sortorder={selectedOrder}
+            />
+          </Flex>
+        </Box>
+
         <GameGrid
           selectedGenra={selectedGenra}
           selectedPlatform={selectedPlatform}
