@@ -4,6 +4,7 @@ import { AxiosRequestConfig, CanceledError } from 'axios'
 
 export interface FetchResponse<T> {
   results: T[]
+  next: string | null
 }
 
 export interface Genra {

@@ -1,10 +1,7 @@
 import apiClient from '../services/api-client'
-import { useEffect, useState } from 'react'
-import { CanceledError } from 'axios'
-import useData, { FetchResponse } from './useData'
-import { Genra } from './useData'
+import { FetchResponse } from './useData'
 import { GameQuery } from '../App'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useInfiniteQuery } from '@tanstack/react-query'
 
 interface FetchGameResponse {
   count: number
@@ -40,12 +37,13 @@ export interface Platform {
 //   )
 
 const useGames = (gameQuery: GameQuery) =>
-  useQuery<FetchResponse<Game>, Error>({
+  useInfiniteQuery<FetchResponse<Game>, Error>({
     queryKey: ['games', gameQuery],
-    queryFn: () =>
+    queryFn: ({ pageParam = 1 }) =>
       apiClient
         .get<FetchResponse<Game>>('/games', {
           params: {
+            page: pageParam,
             genres: gameQuery.genre?.id,
             platforms: gameQuery.platform?.id,
             ordering: gameQuery.order,
@@ -53,6 +51,11 @@ const useGames = (gameQuery: GameQuery) =>
           },
         })
         .then((res) => res.data),
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.next ? allPages.length + 1 : undefined
+    },
+    staleTime: 24 * 60 * 1000,
+    initialPageParam: 1,
   })
 
 export default useGames
