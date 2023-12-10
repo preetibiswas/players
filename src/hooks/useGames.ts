@@ -1,9 +1,10 @@
 import apiClient from '../services/api-client'
 import { useEffect, useState } from 'react'
 import { CanceledError } from 'axios'
-import useData from './useData'
+import useData, { FetchResponse } from './useData'
 import { Genra } from './useData'
 import { GameQuery } from '../App'
+import { useQuery } from '@tanstack/react-query'
 
 interface FetchGameResponse {
   count: number
@@ -24,18 +25,34 @@ export interface Platform {
   slug: string
 }
 
+// const useGames = (gameQuery: GameQuery) =>
+//   useData<Game>(
+//     '/games',
+//     {
+//       params: {
+//         genres: gameQuery.genre?.id,
+//         platforms: gameQuery.platform?.id,
+//         ordering: gameQuery.order,
+//         search: gameQuery.searchText,
+//       },
+//     },
+//     [gameQuery],
+//   )
+
 const useGames = (gameQuery: GameQuery) =>
-  useData<Game>(
-    '/games',
-    {
-      params: {
-        genres: gameQuery.genre?.id,
-        platforms: gameQuery.platform?.id,
-        ordering: gameQuery.order,
-        search: gameQuery.searchText,
-      },
-    },
-    [gameQuery],
-  )
+  useQuery<FetchResponse<Game>, Error>({
+    queryKey: ['games', gameQuery],
+    queryFn: () =>
+      apiClient
+        .get<FetchResponse<Game>>('/games', {
+          params: {
+            genres: gameQuery.genre?.id,
+            platforms: gameQuery.platform?.id,
+            ordering: gameQuery.order,
+            search: gameQuery.searchText,
+          },
+        })
+        .then((res) => res.data),
+  })
 
 export default useGames
