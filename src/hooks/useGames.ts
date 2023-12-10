@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { CanceledError } from 'axios'
 import useData from './useData'
 import { Genra } from './useData'
+import { GameQuery } from '../App'
 
 interface FetchGameResponse {
   count: number
@@ -23,23 +24,18 @@ export interface Platform {
   slug: string
 }
 
-const useGames = (
-  selectedGenra: Genra | null,
-  selectedPlatform: Platform | null,
-  selectedOrder: string | null,
-  searchText: string | null,
-) =>
+const useGames = (gameQuery: GameQuery) =>
   useData<Game>(
     '/games',
     {
       params: {
-        genres: selectedGenra?.id,
-        platforms: selectedPlatform?.id,
-        ordering: selectedOrder,
-        search: searchText,
+        genres: gameQuery.genre?.id,
+        platforms: gameQuery.platform?.id,
+        ordering: gameQuery.order,
+        search: gameQuery.searchText,
       },
     },
-    [selectedGenra?.id, selectedPlatform?.id, selectedOrder, searchText],
+    [gameQuery],
   )
 
 export default useGames
