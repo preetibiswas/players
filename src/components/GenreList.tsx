@@ -1,24 +1,19 @@
-import React from 'react'
 import useGenra from '../hooks/useGenra'
-import useData from '../hooks/useData'
-import { Genra } from '../hooks/useGenra'
 import {
   HStack,
   List,
   ListItem,
   Image,
-  Text,
   Spinner,
   Button,
   Heading,
 } from '@chakra-ui/react'
-interface Props {
-  onSelectedGenre: (genre: Genra) => void
-  selectedGenra: Genra | null
-}
+import useGameQueryStore from '../store'
 
-const GenreList = ({ onSelectedGenre, selectedGenra }: Props) => {
-  // const { data: genras, isLoading } = useData<Genra>('/genres')
+const GenreList = () => {
+  const setGenre = useGameQueryStore((s) => s.setGenre)
+  const selectedGenra = useGameQueryStore((s) => s.gameQuery.genre)
+
   const { data: genras, isLoading } = useGenra()
   if (isLoading) return <Spinner />
   return (
@@ -42,7 +37,7 @@ const GenreList = ({ onSelectedGenre, selectedGenra }: Props) => {
               variant="link"
               onClick={() => {
                 console.log(genre)
-                onSelectedGenre(genre)
+                setGenre(genre)
               }}
             >
               {genre.name}

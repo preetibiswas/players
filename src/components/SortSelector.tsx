@@ -1,12 +1,11 @@
 import React from 'react'
 import { Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react'
 import { FaSortDown } from 'react-icons/fa'
-interface Props {
-  onselectOrder: (order: string) => void
-  sortorder: string | null
-}
+import useGameQueryStore from '../store'
 
-const SortSelector = ({ onselectOrder, sortorder }: Props) => {
+const SortSelector = () => {
+  const setSortOrder = useGameQueryStore((s) => s.setSortOrder)
+  const sortorder = useGameQueryStore((s) => s.gameQuery.order)
   const sortOrder = [
     { value: '', label: 'Relevence' },
     { value: '-added', label: 'Data Added' },
@@ -26,7 +25,7 @@ const SortSelector = ({ onselectOrder, sortorder }: Props) => {
           <MenuItem
             value={order.value}
             key={order.value}
-            onClick={() => onselectOrder(order.value)}
+            onClick={() => setSortOrder(order.value)}
           >
             {order.label}
           </MenuItem>
