@@ -20,20 +20,6 @@ export interface Platform {
   slug: string
 }
 
-// const useGames = (gameQuery: GameQuery) =>
-//   useData<Game>(
-//     '/games',
-//     {
-//       params: {
-//         genres: gameQuery.genre?.id,
-//         platforms: gameQuery.platform?.id,
-//         ordering: gameQuery.order,
-//         search: gameQuery.searchText,
-//       },
-//     },
-//     [gameQuery],
-//   )
-
 const useGames = () => {
   const gameQuery = useGameQueryStore((s) => s.gameQuery)
   return useInfiniteQuery<FetchResponse<Game>, Error>({
