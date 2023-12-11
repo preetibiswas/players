@@ -7,6 +7,7 @@ import { Game } from '../hooks/useGames'
 import ExpandableText from '../components/ExpandableText'
 import DefinationItem from '../components/DefinationItem'
 import CriticScore from '../components/CriticScore'
+import GameTrailer from '../components/GameTrailer'
 
 const GameDetailPage = () => {
   const { slug } = useParams()
@@ -43,6 +44,7 @@ const GameDetailPage = () => {
           ))}
         </DefinationItem>
       </SimpleGrid>
+      <GameTrailer gameId={game.id} />
     </div>
   )
 }
