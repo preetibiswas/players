@@ -11,6 +11,8 @@ export interface Game {
   rating_top: number
   rating: number
   platforms: { platform: Platform }[]
+  slug: string
+  description_raw: string
 }
 export interface Platform {
   id: number
